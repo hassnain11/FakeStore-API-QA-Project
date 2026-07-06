@@ -1,0 +1,438 @@
+{
+  "info": {
+    "_postman_id": "f9d95ff6-def1-495f-b8e5-0ed332fbc7b8",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56310725"
+  },
+  "item": [
+    {
+      "name": "Fake Store API QA Project",
+      "item": [
+        {
+          "name": "GET All Products",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakestoreapi.com/products",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Product by ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakestoreapi.com/products/1",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Invalid Product ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakestoreapi.com/products/999999",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Product",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"QA Test Product\",\r\n  \"price\": 99.99,\r\n  \"description\": \"Created during API testing\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Negative Price",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Invalid Product\",\r\n  \"price\": -100,\r\n  \"description\": \"Negative price test\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Product",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Updated QA Product\",\r\n  \"price\": 555.55,\r\n  \"description\": \"Updated through PUT request\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products/1",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Negative Price",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code should be 400 for invalid input\", function () {\r",
+                  "    pm.expect(pm.response.code).to.eql(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response should not be successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.not.eql(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Negative price should not be accepted\", function () {\r",
+                  "    let responseJson = {};\r",
+                  "    \r",
+                  "    try {\r",
+                  "        responseJson = pm.response.json();\r",
+                  "    } catch (e) {\r",
+                  "        responseJson = {};\r",
+                  "    }\r",
+                  "\r",
+                  "    if (responseJson.price !== undefined) {\r",
+                  "        pm.expect(responseJson.price).to.be.above(0);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Invalid Product\",\r\n  \"price\": -500,\r\n  \"description\": \"Negative testing\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products/1",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Empty Title",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code should be 400 for invalid input\", function () {\r",
+                  "    pm.expect(pm.response.code).to.eql(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response should not be successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.not.eql(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Negative price should not be accepted\", function () {\r",
+                  "    let responseJson = {};\r",
+                  "    \r",
+                  "    try {\r",
+                  "        responseJson = pm.response.json();\r",
+                  "    } catch (e) {\r",
+                  "        responseJson = {};\r",
+                  "    }\r",
+                  "\r",
+                  "    if (responseJson.price !== undefined) {\r",
+                  "        pm.expect(responseJson.price).to.be.above(0);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Ghost Product\",\r\n  \"price\": 300,\r\n  \"description\": \"Invalid ID test\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products/999999",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code should be 400 for invalid input\", function () {\r",
+                  "    pm.expect(pm.response.code).to.eql(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response should not be successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.not.eql(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Negative price should not be accepted\", function () {\r",
+                  "    let responseJson = {};\r",
+                  "    \r",
+                  "    try {\r",
+                  "        responseJson = pm.response.json();\r",
+                  "    } catch (e) {\r",
+                  "        responseJson = {};\r",
+                  "    }\r",
+                  "\r",
+                  "    if (responseJson.price !== undefined) {\r",
+                  "        pm.expect(responseJson.price).to.be.above(0);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Ghost Product\",\r\n  \"price\": 300,\r\n  \"description\": \"Invalid ID test\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products/999999",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Invalid Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code should be 400 for invalid input\", function () {\r",
+                  "    pm.expect(pm.response.code).to.eql(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response should not be successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.not.eql(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Negative price should not be accepted\", function () {\r",
+                  "    let responseJson = {};\r",
+                  "    \r",
+                  "    try {\r",
+                  "        responseJson = pm.response.json();\r",
+                  "    } catch (e) {\r",
+                  "        responseJson = {};\r",
+                  "    }\r",
+                  "\r",
+                  "    if (responseJson.price !== undefined) {\r",
+                  "        pm.expect(responseJson.price).to.be.above(0);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Ghost Product\",\r\n  \"price\": 300,\r\n  \"description\": \"Invalid ID test\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://fakestoreapi.com/products/999999",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
